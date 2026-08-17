@@ -41,21 +41,26 @@
       align-items: center;
       gap: 16px;
     }
+    
+    /* SITE LOGO WITH LUMINOUS GRADIENT HOVER */
     .site-logo {
       height: 58px;
       width: auto;
       object-fit: contain;
       border-radius: 8px;
       border: 1px solid #333;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease, filter 0.3s ease;
       cursor: pointer;
     }
     .site-logo:hover {
       transform: scale(1.03);
-      border-color: #996515; /* Darker, subtle gold */
-      box-shadow: 0 2px 8px rgba(153, 101, 21, 0.2); /* Soft, natural glow without pixelation */
-      filter: brightness(1.05);
+      /* Gradient border color fallback & gold accent */
+      border-color: #a37c3f;
+      /* Layered ambient gold glow */
+      box-shadow: 0 0 15px rgba(200, 162, 97, 0.25), 0 0 30px rgba(120, 86, 40, 0.15);
+      filter: brightness(1.08);
     }
+
     .logo {
       font-size: 1.6rem;
       font-weight: 700;
@@ -109,11 +114,12 @@
       border-radius: 4px;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .project-card:hover {
       transform: translateY(-4px);
-      border-color: #444;
+      border-color: #a37c3f;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 12px rgba(163, 124, 63, 0.15);
     }
     .image-wrapper {
       position: relative;
@@ -150,7 +156,7 @@
     .prompt-hint {
       margin-top: 0.8rem;
       font-size: 0.75rem;
-      color: #996515; /* Subtle Gold */
+      color: #a37c3f;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -224,7 +230,7 @@
     }
     .zoom-hint {
       font-size: 0.8rem;
-      color: #996515;
+      color: #a37c3f;
       margin-top: 0.3rem;
     }
 
@@ -302,6 +308,18 @@
       border-bottom: 1px solid #333;
       z-index: 2010;
     }
+    .zoom-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .zoom-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+
     .zoom-toolbar {
       display: flex;
       align-items: center;
@@ -377,17 +395,17 @@
       z-index: 2020;
       opacity: 0.75;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-      transition: opacity 0.3s ease, transform 0.2s ease, border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.2s ease, border-color 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
       user-select: none;
     }
 
     .zoom-side-btn:hover {
       opacity: 1;
       background: #181818;
-      border-color: #996515;
-      color: #996515;
+      border-color: #a37c3f;
+      color: #c8a261;
       transform: translateY(-50%) scale(1.08);
-      box-shadow: 0 0 10px rgba(153, 101, 21, 0.3);
+      box-shadow: 0 0 12px rgba(200, 162, 97, 0.35);
     }
 
     .zoom-side-btn.left {
@@ -420,10 +438,8 @@
       .site-logo {
         height: 42px;
       }
-      .brochure-logo {
+      .brochure-logo, .zoom-logo {
         height: 32px;
-        top: 15px;
-        left: 15px;
       }
       .zoom-side-btn {
         width: 40px;
@@ -526,7 +542,10 @@
   <!-- FULL SCREEN ZOOM LIGHTBOX -->
   <div class="zoom-modal" id="zoomModal">
     <div class="zoom-header">
-      <span style="color: #aaa; font-size: 0.9rem;" id="zoomPageCounter">Page 1 of 1 | Use Arrow keys or Scroll to zoom</span>
+      <div class="zoom-brand-group">
+        <img src="NVweblogo.png" alt="NithiViz Logo" class="zoom-logo">
+        <span style="color: #aaa; font-size: 0.9rem;" id="zoomPageCounter">Page 1 of 1 | Use Arrow keys or Scroll to zoom</span>
+      </div>
       
       <div class="zoom-toolbar">
         <button id="zoomPrevBtn" onclick="changeZoomPage(-1)">&larr; Prev Page</button>
