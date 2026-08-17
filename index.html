@@ -52,8 +52,8 @@
     }
     .site-logo:hover {
       transform: scale(1.04);
-      border-color: #d4af37;
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+      border-color: #b8860b; /* Darker Gold */
+      box-shadow: 0 0 12px rgba(184, 134, 11, 0.3);
       filter: brightness(1.1);
     }
     .logo {
@@ -150,7 +150,7 @@
     .prompt-hint {
       margin-top: 0.8rem;
       font-size: 0.75rem;
-      color: #d4af37;
+      color: #b8860b; /* Darker Gold */
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -187,7 +187,6 @@
       align-items: center;
     }
 
-    /* BROCHURE TOP LOGO POSITIONING (UNCHANGED) */
     .brochure-logo {
       position: absolute;
       top: 16px;
@@ -225,7 +224,7 @@
     }
     .zoom-hint {
       font-size: 0.8rem;
-      color: #d4af37;
+      color: #b8860b; /* Darker Gold */
       margin-top: 0.3rem;
     }
 
@@ -298,22 +297,35 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(20, 20, 20, 0.8);
+      padding: 0.8rem 2rem;
+      background: rgba(20, 20, 20, 0.9);
       border-bottom: 1px solid #333;
       z-index: 2010;
+    }
+    .zoom-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .zoom-toolbar button {
       background: #2a2a2a;
       color: #fff;
       border: 1px solid #444;
       padding: 0.4rem 0.8rem;
-      margin-left: 0.5rem;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s ease;
+    }
+    .zoom-toolbar button:hover {
+      background: #3a3a3a;
+    }
+    .zoom-toolbar button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
     }
 
-    /* FLEXBOX CONTAINER FOR PERFECT CENTERING */
+    /* ZOOM STAGE & SIDE NAV BUTTONS */
     .zoom-stage {
       flex: 1;
       width: 100%;
@@ -330,7 +342,6 @@
       cursor: grabbing;
     }
 
-    /* WRAPPER ENABLES PANZOOM WITHOUT BROKEN FLEX ALIGNMENT */
     .panzoom-wrapper {
       display: flex;
       align-items: center;
@@ -345,6 +356,38 @@
       object-fit: contain;
       display: block;
       pointer-events: auto;
+    }
+
+    /* HOVER ARROWS ON LEFT / RIGHT OF ZOOMED SCREEN */
+    .zoom-side-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(20, 20, 20, 0.4);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 2.2rem;
+      padding: 1.5rem 0.8rem;
+      cursor: pointer;
+      z-index: 2020;
+      opacity: 0.2;
+      transition: opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      user-select: none;
+      border-radius: 4px;
+    }
+    .zoom-side-btn:hover {
+      opacity: 1;
+      background: rgba(35, 35, 35, 0.85);
+      border-color: #b8860b; /* Darker Gold Highlight */
+    }
+    .zoom-side-btn.left {
+      left: 15px;
+    }
+    .zoom-side-btn.right {
+      right: 15px;
+    }
+    .zoom-side-btn:disabled {
+      display: none;
     }
 
     /* FOOTER */
@@ -367,6 +410,10 @@
         height: 32px;
         top: 15px;
         left: 15px;
+      }
+      .zoom-side-btn {
+        padding: 0.8rem 0.4rem;
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -439,7 +486,6 @@
   <!-- BROCHURE MODAL VIEWER -->
   <div class="modal-overlay" id="brochureModal">
     <div class="book-container">
-      <!-- LOGO POSITION IN TOP LEFT -->
       <img src="NVweblogo.png" alt="NithiViz Logo" class="brochure-logo">
 
       <button class="close-btn" onclick="closeBrochure()">&times;</button>
@@ -449,7 +495,6 @@
         <div class="zoom-hint">🔍 Click image to open Full-Screen Zoom Mode</div>
       </div>
 
-      <!-- Clicking the page stage opens full screen zoom -->
       <div class="page-stage" onclick="openZoomViewer()">
         <div class="shield"></div>
         <img id="currentPageImg" src="" alt="Brochure Page">
@@ -466,18 +511,31 @@
   <!-- FULL SCREEN ZOOM LIGHTBOX -->
   <div class="zoom-modal" id="zoomModal">
     <div class="zoom-header">
-      <span style="color: #aaa; font-size: 0.9rem;">Scroll wheel to zoom | Drag image to pan</span>
+      <span style="color: #aaa; font-size: 0.9rem;" id="zoomPageCounter">Scroll wheel to zoom | Drag image to pan</span>
+      
       <div class="zoom-toolbar">
+        <!-- TOP RIGHT PAGE NAV BUTTONS -->
+        <button id="zoomPrevBtn" onclick="changeZoomPage(-1)">&larr; Prev Page</button>
+        <button id="zoomNextBtn" onclick="changeZoomPage(1)">Next Page &rarr;</button>
+        
+        <span style="color:#444; margin: 0 4px;">|</span>
+        
         <button onclick="panzoomInstance.zoomIn()">Zoom In +</button>
         <button onclick="panzoomInstance.zoomOut()">Zoom Out -</button>
         <button onclick="panzoomInstance.reset()">Reset</button>
         <button onclick="closeZoomViewer()" style="background:#8b0000; border-color:#a00;">Close [X]</button>
       </div>
     </div>
+
     <div class="zoom-stage">
+      <!-- HOVER BUTTONS ON LEFT AND RIGHT EDGES -->
+      <button class="zoom-side-btn left" id="zoomSidePrev" onclick="changeZoomPage(-1)">&larr;</button>
+      
       <div class="panzoom-wrapper" id="panzoomWrapper">
         <img id="zoomTargetImg" src="" alt="Zoomable Page Render">
       </div>
+
+      <button class="zoom-side-btn right" id="zoomSideNext" onclick="changeZoomPage(1)">&rarr;</button>
     </div>
   </div>
 
@@ -537,17 +595,39 @@
 
       prevBtn.disabled = (pageIndex === 0);
       nextBtn.disabled = (pageIndex === currentPages.length - 1);
+      
+      updateZoomControls();
     }
 
-    /* CENTERED ZOOM VIEWER FIX */
+    function updateZoomControls() {
+      const zoomPrevBtn = document.getElementById('zoomPrevBtn');
+      const zoomNextBtn = document.getElementById('zoomNextBtn');
+      const zoomSidePrev = document.getElementById('zoomSidePrev');
+      const zoomSideNext = document.getElementById('zoomSideNext');
+      const zoomPageCounter = document.getElementById('zoomPageCounter');
+
+      const isFirst = (pageIndex === 0);
+      const isLast = (pageIndex === currentPages.length - 1);
+
+      if (zoomPrevBtn) zoomPrevBtn.disabled = isFirst;
+      if (zoomNextBtn) zoomNextBtn.disabled = isLast;
+      if (zoomSidePrev) zoomSidePrev.disabled = isFirst;
+      if (zoomSideNext) zoomSideNext.disabled = isLast;
+
+      if (zoomPageCounter) {
+        zoomPageCounter.innerText = `Page ${pageIndex + 1} of ${currentPages.length} | Scroll wheel to zoom`;
+      }
+    }
+
     function openZoomViewer() {
       const zoomImg = document.getElementById('zoomTargetImg');
       const wrapper = document.getElementById('panzoomWrapper');
       const zoomModal = document.getElementById('zoomModal');
       
       zoomImg.src = currentPages[pageIndex];
-
       zoomModal.classList.add('active');
+
+      updateZoomControls();
 
       if (panzoomInstance) {
         panzoomInstance.destroy();
@@ -569,6 +649,24 @@
           });
         };
       }, 50);
+    }
+
+    function changeZoomPage(direction) {
+      if ((direction === -1 && pageIndex > 0) || (direction === 1 && pageIndex < currentPages.length - 1)) {
+        pageIndex += direction;
+        
+        // Synchronize main modal page
+        updatePageDisplay();
+
+        // Update zoom image
+        const zoomImg = document.getElementById('zoomTargetImg');
+        zoomImg.src = currentPages[pageIndex];
+
+        // Reset zoom transform when changing page
+        if (panzoomInstance) {
+          panzoomInstance.reset();
+        }
+      }
     }
 
     function closeZoomViewer() {
