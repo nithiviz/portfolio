@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NithiViz — Architectural Visualization Portfolio</title>
+  <style>
+    /* RESET & GLOBALS */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* IMAGE PROTECTION */
+    img {
+      pointer-events: none; /* Prevents dragging */
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* HEADER & BRANDING */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 5%;
+      border-bottom: 1px solid #222;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: #aaa;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: 6rem 5% 4rem 5%;
+      max-width: 900px;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      color: #fff;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #888;
+    }
+
+    /* GALLERY GRID */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      padding: 2rem 5% 6rem 5%;
+    }
+
+    /* PROJECT CARD & OVERLAY SHIELD */
+    .project-card {
+      position: relative;
+      background-color: #1a1a1a;
+      border: 1px solid #282828;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background-color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+    }
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Transparent click shield */
+    .shield {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+
+    .project-info {
+      padding: 1.5rem;
+    }
+    .project-info h3 {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .project-info p {
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 3rem 5%;
+      border-top: 1px solid #222;
+      font-size: 0.8rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;"> <!-- Disables right-click site-wide -->
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">NITHIVIZ</div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO STATEMENT -->
+  <section class="hero">
+    <h1>Architectural Visualization & Digital Design Lookbook</h1>
+    <p>Crafting atmospheric 3D renders, spatial concepts, and architectural narratives.</p>
+  </section>
+
+  <!-- PORTFOLIO LOOKBOOK GRID -->
+  <main class="portfolio-grid" id="work">
+
+    <!-- PROJECT CARD 1 -->
+    <article class="project-card">
+      <div class="image-wrapper">
+        <div class="shield"></div>
+        <img src="https://picsum.photos/800/600?grayscale&random=1" alt="Placeholder Architectural Render">
+      </div>
+      <div class="project-info">
+        <h3>Project Concept 01</h3>
+        <p>Exterior Render — Modern Residential Villa</p>
+      </div>
+    </article>
+
+    <!-- PROJECT CARD 2 -->
+    <article class="project-card">
+      <div class="image-wrapper">
+        <div class="shield"></div>
+        <img src="https://picsum.photos/800/600?grayscale&random=2" alt="Placeholder Architectural Render">
+      </div>
+      <div class="project-info">
+        <h3>Project Concept 02</h3>
+        <p>Interior Study — Minimalist Daylight Living Space</p>
+      </div>
+    </article>
+
+    <!-- PROJECT CARD 3 -->
+    <article class="project-card">
+      <div class="image-wrapper">
+        <div class="shield"></div>
+        <img src="https://picsum.photos/800/600?grayscale&random=3" alt="Placeholder Architectural Render">
+      </div>
+      <div class="project-info">
+        <h3>Project Concept 03</h3>
+        <p>Atmospheric Render — Commercial Facade at Dusk</p>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 NithiViz. All rights reserved. Works protected against unauthorized copying.</p>
+  </footer>
+
+</body>
+</html>
