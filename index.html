@@ -299,6 +299,7 @@
       max-height: 90%;
       object-fit: contain;
       cursor: grab;
+      transform-origin: center center;
     }
     .zoom-stage img:active {
       cursor: grabbing;
@@ -480,7 +481,7 @@
       nextBtn.disabled = (pageIndex === currentPages.length - 1);
     }
 
-    /* FULL-SCREEN ZOOM & PAN LOGIC */
+    /* CENTER-ZOOM & PAN LOGIC */
     function openZoomViewer() {
       const zoomImg = document.getElementById('zoomTargetImg');
       zoomImg.src = currentPages[pageIndex];
@@ -492,16 +493,23 @@
         panzoomInstance.destroy();
       }
 
-      // Initialize Panzoom directly on the target image
+      // Initialize Panzoom on the image with center origin
       panzoomInstance = Panzoom(zoomImg, {
         maxScale: 5,
         minScale: 1,
-        contain: 'outside'
+        contain: 'outside',
+        setTransformOrigin: true
       });
 
-      // Enable mouse scroll wheel zooming
+      // Force center transform origin
+      zoomImg.style.transformOrigin = 'center center';
+
+      // Attach scroll wheel zoom centered
       const stage = document.querySelector('.zoom-stage');
-      stage.addEventListener('wheel', panzoomInstance.zoomWithWheel);
+      stage.onwheel = function(event) {
+        event.preventDefault();
+        panzoomInstance.zoomWithWheel(event, { focal: { x: stage.clientWidth / 2, y: stage.clientHeight / 2 } });
+      };
     }
 
     function closeZoomViewer() {
