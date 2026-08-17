@@ -20,7 +20,7 @@
 
     /* IMAGE PROTECTION */
     img {
-      pointer-events: none; /* Prevents dragging */
+      pointer-events: none;
       user-select: none;
       -webkit-user-drag: none;
     }
@@ -55,7 +55,7 @@
 
     /* HERO SECTION */
     .hero {
-      padding: 6rem 5% 4rem 5%;
+      padding: 5rem 5% 3rem 5%;
       max-width: 900px;
     }
     .hero h1 {
@@ -78,30 +78,31 @@
       padding: 2rem 5% 6rem 5%;
     }
 
-    /* PROJECT CARD & OVERLAY SHIELD */
+    /* PROJECT CARD */
     .project-card {
       position: relative;
       background-color: #1a1a1a;
       border: 1px solid #282828;
       border-radius: 4px;
       overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: #444;
     }
     .image-wrapper {
       position: relative;
       width: 100%;
       height: 280px;
       background-color: #222;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
     }
     .image-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    /* Transparent click shield */
     .shield {
       position: absolute;
       top: 0;
@@ -110,7 +111,6 @@
       height: 100%;
       z-index: 10;
     }
-
     .project-info {
       padding: 1.5rem;
     }
@@ -123,6 +123,117 @@
       font-size: 0.85rem;
       color: #777;
     }
+    .prompt-hint {
+      margin-top: 0.8rem;
+      font-size: 0.75rem;
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* BROCHURE / BOOK MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      display: none; /* Hidden by default */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .book-container {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .close-btn:hover {
+      color: #fff;
+    }
+
+    .book-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .book-title {
+      color: #fff;
+      font-size: 1.4rem;
+    }
+
+    /* PAGE STAGE */
+    .page-stage {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      background-color: #0d0d0d;
+      border: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .page-stage img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* NAV CONTROLS */
+    .book-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+    .nav-btn {
+      background: #252525;
+      color: #fff;
+      border: 1px solid #3d3d3d;
+      padding: 0.6rem 1.4rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: #383838;
+    }
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .page-counter {
+      color: #888;
+      font-size: 0.9rem;
+    }
 
     /* FOOTER */
     footer {
@@ -132,9 +243,15 @@
       font-size: 0.8rem;
       color: #555;
     }
+
+    @media (max-width: 600px) {
+      .page-stage {
+        height: 280px;
+      }
+    }
   </style>
 </head>
-<body oncontextmenu="return false;"> <!-- Disables right-click site-wide -->
+<body oncontextmenu="return false;">
 
   <!-- HEADER -->
   <header>
@@ -148,55 +265,134 @@
 
   <!-- HERO STATEMENT -->
   <section class="hero">
-    <h1>Architectural Visualization & Digital Design Lookbook</h1>
-    <p>Crafting atmospheric 3D renders, spatial concepts, and architectural narratives.</p>
+    <h1>Architectural Visualization Lookbook</h1>
+    <p>Select a project card to open its full interactive brochure.</p>
   </section>
 
-  <!-- PORTFOLIO LOOKBOOK GRID -->
+  <!-- PORTFOLIO GRID -->
   <main class="portfolio-grid" id="work">
 
-    <!-- PROJECT CARD 1 -->
-    <article class="project-card">
+    <!-- PROJECT 1 -->
+    <article class="project-card" onclick="openBrochure('Modern Residential Villa', villaPages)">
       <div class="image-wrapper">
         <div class="shield"></div>
-        <img src="https://picsum.photos/800/600?grayscale&random=1" alt="Placeholder Architectural Render">
+        <img src="https://picsum.photos/id/1067/800/600" alt="Villa Exterior Render">
       </div>
       <div class="project-info">
         <h3>Project Concept 01</h3>
         <p>Exterior Render — Modern Residential Villa</p>
+        <div class="prompt-hint">Click to Open Brochure &rarr;</div>
       </div>
     </article>
 
-    <!-- PROJECT CARD 2 -->
-    <article class="project-card">
+    <!-- PROJECT 2 -->
+    <article class="project-card" onclick="openBrochure('Minimalist Living Space', interiorPages)">
       <div class="image-wrapper">
         <div class="shield"></div>
-        <img src="https://picsum.photos/800/600?grayscale&random=2" alt="Placeholder Architectural Render">
+        <img src="https://picsum.photos/id/1068/800/600" alt="Interior Render">
       </div>
       <div class="project-info">
         <h3>Project Concept 02</h3>
-        <p>Interior Study — Minimalist Daylight Living Space</p>
+        <p>Interior Study — Minimalist Daylight Space</p>
+        <div class="prompt-hint">Click to Open Brochure &rarr;</div>
       </div>
     </article>
 
-    <!-- PROJECT CARD 3 -->
-    <article class="project-card">
+    <!-- PROJECT 3 -->
+    <article class="project-card" onclick="openBrochure('Commercial Facade at Dusk', facadePages)">
       <div class="image-wrapper">
         <div class="shield"></div>
-        <img src="https://picsum.photos/800/600?grayscale&random=3" alt="Placeholder Architectural Render">
+        <img src="https://picsum.photos/id/1075/800/600" alt="Facade Render">
       </div>
       <div class="project-info">
         <h3>Project Concept 03</h3>
-        <p>Atmospheric Render — Commercial Facade at Dusk</p>
+        <p>Atmospheric Render — Commercial Facade</p>
+        <div class="prompt-hint">Click to Open Brochure &rarr;</div>
       </div>
     </article>
 
   </main>
 
+  <!-- BROCHURE MODAL VIEWER -->
+  <div class="modal-overlay" id="brochureModal">
+    <div class="book-container">
+      <button class="close-btn" onclick="closeBrochure()">&times;</button>
+      
+      <div class="book-header">
+        <h2 class="book-title" id="bookTitle">Project Brochure</h2>
+      </div>
+
+      <div class="page-stage">
+        <div class="shield"></div>
+        <img id="currentPageImg" src="" alt="Brochure Page">
+      </div>
+
+      <div class="book-controls">
+        <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">&larr; Previous Page</button>
+        <span class="page-counter" id="pageCounter">Page 1 of 1</span>
+        <button class="nav-btn" id="nextBtn" onclick="changePage(1)">Next Page &rarr;</button>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <p>&copy; 2026 NithiViz. All rights reserved. Works protected against unauthorized copying.</p>
   </footer>
+
+  <!-- BROCHURE INTERACTION SCRIPT -->
+  <script>
+    // Sample brochure page arrays (Replace these URLs with your render images)
+    const villaPages = [
+      "https://picsum.photos/id/1067/1200/800",
+      "https://picsum.photos/id/1040/1200/800",
+      "https://picsum.photos/id/1029/1200/800"
+    ];
+
+    const interiorPages = [
+      "https://picsum.photos/id/1068/1200/800",
+      "https://picsum.photos/id/1069/1200/800"
+    ];
+
+    const facadePages = [
+      "https://picsum.photos/id/1075/1200/800",
+      "https://picsum.photos/id/1076/1200/800",
+      "https://picsum.photos/id/1080/1200/800"
+    ];
+
+    let currentPages = [];
+    let pageIndex = 0;
+
+    function openBrochure(title, pagesArray) {
+      currentPages = pagesArray;
+      pageIndex = 0;
+      document.getElementById('bookTitle').innerText = title;
+      document.getElementById('brochureModal').classList.add('active');
+      updatePageDisplay();
+    }
+
+    function closeBrochure() {
+      document.getElementById('brochureModal').classList.remove('active');
+    }
+
+    function changePage(direction) {
+      pageIndex += direction;
+      updatePageDisplay();
+    }
+
+    function updatePageDisplay() {
+      const imgElem = document.getElementById('currentPageImg');
+      const counterElem = document.getElementById('pageCounter');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      imgElem.src = currentPages[pageIndex];
+      counterElem.innerText = `Page ${pageIndex + 1} of ${currentPages.length}`;
+
+      prevBtn.disabled = (pageIndex === 0);
+      nextBtn.disabled = (pageIndex === currentPages.length - 1);
+    }
+  </script>
 
 </body>
 </html>
