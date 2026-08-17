@@ -42,7 +42,7 @@
       gap: 16px;
     }
     
-    /* SITE LOGO WITH LUMINOUS GRADIENT HOVER */
+    /* SITE LOGO WITH SUBTLE METALLIC HOVER */
     .site-logo {
       height: 58px;
       width: auto;
@@ -53,12 +53,11 @@
       cursor: pointer;
     }
     .site-logo:hover {
-      transform: scale(1.03);
-      /* Gradient border color fallback & gold accent */
+      transform: scale(1.02);
       border-color: #a37c3f;
-      /* Layered ambient gold glow */
-      box-shadow: 0 0 15px rgba(200, 162, 97, 0.25), 0 0 30px rgba(120, 86, 40, 0.15);
-      filter: brightness(1.08);
+      /* Softened & reduced metallic hover glow */
+      box-shadow: 0 0 8px rgba(200, 162, 97, 0.18), 0 0 16px rgba(120, 86, 40, 0.1);
+      filter: brightness(1.04);
     }
 
     .logo {
@@ -376,7 +375,7 @@
       pointer-events: auto;
     }
 
-    /* ENHANCED CIRCULAR SIDE NAV BUTTONS */
+    /* CIRCULAR SIDE NAV BUTTONS */
     .zoom-side-btn {
       position: absolute;
       top: 50%;
