@@ -295,11 +295,12 @@
       cursor: grabbing;
     }
     .zoom-stage img {
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 90vw;
+      max-height: 85vh;
       object-fit: contain;
       cursor: grab;
-      transform-origin: center center;
+      margin: auto;
+      display: block;
     }
     .zoom-stage img:active {
       cursor: grabbing;
@@ -481,35 +482,41 @@
       nextBtn.disabled = (pageIndex === currentPages.length - 1);
     }
 
-    /* CENTER-ZOOM & PAN LOGIC */
+    /* CENTERED ZOOM & PAN INITIALIZATION */
     function openZoomViewer() {
       const zoomImg = document.getElementById('zoomTargetImg');
-      zoomImg.src = currentPages[pageIndex];
-      
       const zoomModal = document.getElementById('zoomModal');
+      
+      // Set image source
+      zoomImg.src = currentPages[pageIndex];
+
+      // 1. Make modal visible BEFORE calculating Panzoom bounds
       zoomModal.classList.add('active');
 
       if (panzoomInstance) {
         panzoomInstance.destroy();
       }
 
-      // Initialize Panzoom on the image with center origin
-      panzoomInstance = Panzoom(zoomImg, {
-        maxScale: 5,
-        minScale: 1,
-        contain: 'outside',
-        setTransformOrigin: true
+      // 2. Delay initialization slightly so browser computes actual layout center
+      requestAnimationFrame(() => {
+        panzoomInstance = Panzoom(zoomImg, {
+          maxScale: 5,
+          minScale: 1,
+          startScale: 1,
+          startX: 0,
+          startY: 0,
+          setTransformOrigin: true
+        });
+
+        // Attach scroll wheel zoom directly to stage
+        const stage = document.querySelector('.zoom-stage');
+        stage.onwheel = function(event) {
+          event.preventDefault();
+          panzoomInstance.zoomWithWheel(event, { 
+            focal: { x: stage.clientWidth / 2, y: stage.clientHeight / 2 } 
+          });
+        };
       });
-
-      // Force center transform origin
-      zoomImg.style.transformOrigin = 'center center';
-
-      // Attach scroll wheel zoom centered
-      const stage = document.querySelector('.zoom-stage');
-      stage.onwheel = function(event) {
-        event.preventDefault();
-        panzoomInstance.zoomWithWheel(event, { focal: { x: stage.clientWidth / 2, y: stage.clientHeight / 2 } });
-      };
     }
 
     function closeZoomViewer() {
