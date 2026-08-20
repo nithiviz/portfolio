@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NithiViz — Architectural Visualization Portfolio</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5WVMMG5DK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-L5WVMMG5DK');
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+
+  <style>
+    /* ... (All your existing CSS remains the same, except for the additions below) ... */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #121212; color: #e0e0e0; font-family: -apple-system, sans-serif; line-height: 1.6; }
+    
+    /* ADDED/UPDATED STYLES FOR VIDEO COVERS */
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background-color: #222;
+      overflow: hidden;
+    }
+    .project-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Keeps it filling the box like your images did */
+      display: block;
+    }
+    
+    /* ... (Keep all your existing CSS for header, grid, modals, etc.) ... */
+    /* (I have omitted the middle CSS for brevity, keep what you have!) */
+    header { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 5%; border-bottom: 1px solid #222; }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; padding: 2rem 5% 6rem 5%; }
+    .project-card { position: relative; background-color: #1a1a1a; border: 1px solid #282828; border-radius: 4px; overflow: hidden; cursor: pointer; transition: transform 0.3s; }
+    .project-card:hover { transform: translateY(-4px); border-color: #a37c3f; }
+    .project-info { padding: 1.5rem; }
+    .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.92); display:none; justify-content:center; align-items:center; z-index:1000; }
+    .modal-overlay.active { display: flex; }
+    /* (Include your existing Modal and Zoom CSS here) */
+  </style>
+</head>
+<body>
+
+  <!-- (Keep your existing Header) -->
+  <header>
+    <div class="brand-container">
+      <img src="NVweblogo.png" alt="NithiViz Logo" class="site-logo">
+      <div class="logo">NITHIVIZ</div>
+    </div>
+    <nav>
+      <a onclick="openModal('aboutModal')">About</a>
+      <a onclick="openModal('contactModal')">Contact</a>
+    </nav>
+  </header>
+
+  <main class="portfolio-grid" id="work">
+
+    <!-- PROJECT 1: Updated with Video -->
+    <article class="project-card" onclick="openBrochure('Modern Residential Villa', villaPages)">
+      <div class="image-wrapper">
+        <video class="project-video" autoplay muted loop playsinline poster="preview1.jpg">
+          <source src="villa-cover.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>Project Concept 01</h3>
+        <p>Exterior Render — Modern Residential Villa</p>
+        <div class="prompt-hint">Click to Open Brochure &rarr;</div>
+      </div>
+    </article>
+
+    <!-- PROJECT 2: Updated with Video -->
+    <article class="project-card" onclick="openBrochure('Minimalist Living Space', interiorPages)">
+      <div class="image-wrapper">
+        <video class="project-video" autoplay muted loop playsinline poster="preview2.jpg">
+          <source src="interior-cover.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="project-info">
+        <h3>Project Concept 02</h3>
+        <p>Interior Study — Minimalist Daylight Space</p>
+        <div class="prompt-hint">Click to Open Brochure &rarr;</div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- (Keep the rest of your existing HTML: Modals, Zoom Viewer, and Scripts) -->
+  
+  <script>
+    // Your existing JS functions remain completely untouched.
+    // They will work perfectly with the new video structure.
+  </script>
+</body>
+</html>
